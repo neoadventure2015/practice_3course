@@ -17,8 +17,9 @@ public class Flight implements Serializable, IModel{
 
 	@Id
 	private int id;
-	private int continuance;
 	private String name;
+	private int continuance;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "FLIGHT_FROM")
@@ -105,15 +106,19 @@ public class Flight implements Serializable, IModel{
 	}
 	@Override
 	public Object[] getTableRowData() {
-		return new Object[] { id, name, continuance, airportFROM, airportTO };
+		return new Object[] { id, name, continuance, airportFROM.getId(), airportTO.getId() };
 	}
+
+	
+	
+	
 	@Override
 	public void updateWith(Object mask) {
 		Flight obj = (Flight) mask;
 		name = obj.getName();
 		continuance = obj.getContinuance();
-		airportFROM = obj.getAirportFrom();
-		airportTO = obj.getAirportTO();
+		//airportFROM = obj.getAirportFrom();
+		//airportTO = obj.getAirportTO();
 		
 	}
 	@Override

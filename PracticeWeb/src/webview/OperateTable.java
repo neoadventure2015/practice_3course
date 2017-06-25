@@ -80,15 +80,21 @@ public class OperateTable extends HttpServlet {
 				((Flight) obj).setName(name);
 				int continuance = Integer.parseInt(request.getParameter("flightContinuance"));
 				((Flight) obj).setContinuance(continuance);
-
+				
+				int idAirFROM = Integer.parseInt(request.getParameter("idAirFROM"));
+				if (idAirFROM == 12){
+					System.out.println("Debug2");
+				}
+				Airport airportFROM = (Airport) findObject(Airport.class, idAirFROM);
+				((Flight) obj).setAirportFrom(airportFROM);
+				
+				
+				
 				int idAirTO = Integer.parseInt(request.getParameter("idAirTO"));
 				Airport airportTO = (Airport) findObject(Airport.class, idAirTO);
-				((Flight) obj).setAirportFrom(airportTO);
+				((Flight) obj).setAirportTO(airportTO);
 
-				int idAirFROM = Integer.parseInt(request.getParameter("idAirFROM"));
-				Airport airportFROM= (Airport) findObject(Airport.class, idAirFROM);
-				((Flight) obj).setAirportFrom(airportFROM);
-
+			
 			}
 		} else if (obj instanceof Ticket) {
 			int price = Integer.parseInt(request.getParameter("ticketPrice"));
