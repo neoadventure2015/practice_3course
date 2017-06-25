@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>menuTable</title>
+</head>
+<body>
+<center>
+		<form action="SelectTable" target="forTable" name="selectTable"
+			method="POST">
+			<b>Виберіть таблицю</b>
+			<table width="100">
+				<tr>
+					<td align="left"><input type="radio" name="className"
+						value="Passenger"> Passenger</td>
+				</tr>
+				<tr>
+					<td align="left"><input type="radio" name="className"
+						value="Flight"> Flight</td>
+				<tr>
+					<td align="left"><input type="radio" name="className"
+						value="Ticket"> Ticket</td>
+				</tr>
+					<tr>
+					<td align="left"><input type="radio" name="className"
+						value="Airport"> "Airport"</td>
+				</tr>
+			</table>
+			<input type="submit" value="Завантажити">
+			<p></p>
+		</form>
+
+		<form action="SelectQuery" target="forTable" name="selectQuery"
+			method="POST">
+			<b>Вибір запиту до бази</b>
+			<select size="1" name="query">
+				<option value="ticket">Знайти пасажира, у якого ціла білета > 200
+				<!-- <option value="somthing">Показати ще щось -->
+			</select>
+			<p>
+				<input type="submit" value="Виконати запит">
+			<p>
+		</form>
+</center>
+
+</body>
+</html>
