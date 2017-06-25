@@ -9,9 +9,20 @@ import static javax.persistence.GenerationType.IDENTITY;
  * 
  */
 @Entity
-@NamedQuery(name = "Passenger.findAll", query = "SELECT p FROM Passenger p ORDER BY p.name")
+@NamedQuery(name = "Airport.findAll", query = "SELECT a FROM Airport a ORDER BY a.name")
 public class Airport implements Serializable , IModel{
 
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	private int id;
+
+	private String name;
+	private String country;
+	private String city;
+
+	// bi-directional many-to-one association to Ticket
+//	@ManyToMany(mappedBy = "airport")
+	private List<Flight> flights;
 
 	@Override
 	public String toString() {
@@ -44,18 +55,7 @@ public class Airport implements Serializable , IModel{
 			return false;
 		return true;
 	}
-//=======================================================================
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	private int id;
 
-	private String name;
-	private String country;
-	private String city;
-
-	// bi-directional many-to-one association to Ticket
-	@OneToMany(mappedBy = "airport")
-	private List<Flight> flights;
 
 	public Airport() {
 	}
@@ -91,9 +91,8 @@ public class Airport implements Serializable , IModel{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-	
+
+
 
 	public List<Flight> getFlights() {
 		return this.flights;
@@ -103,22 +102,28 @@ public class Airport implements Serializable , IModel{
 		this.flights = flights;
 	}
 
-	public Flight addFlights(Flight flight) {
+	public Flight addFlightFROM(Flight flight) {
 		getFlights().add(flight);
-		flight.setAirportTo(this);
-
+		flight.setAirportFrom(this);
+		return flight;
+	}
+	public Flight addFlightTO(Flight flight) {
+		getFlights().add(flight);
+		flight.setAirportTO(this);
 		return flight;
 	}
 
-	public Flight removeFlight(Flight flight) {
+	public Flight removeFlightFrom(Flight flight) {
 		getFlights().remove(flight);
-		flight.setAirportTo(null);
 		flight.setAirportFrom(null);
-
 		return flight;
 	}
-	
-	
+	public Flight removeFlightTo(Flight flight) {
+		getFlights().remove(flight);
+		flight.setAirportTO(null);
+		return flight;
+	}
+
 	@Override
 	public String[] getTableHeaders() {
 		return new String[] { "ID", "Name", "Coutnry", "City"};
@@ -134,7 +139,7 @@ public class Airport implements Serializable , IModel{
 		country = obj.getCoutnry();
 		city = obj.getCity();
 	}
-	
+
 	@Override
 	public void setObjectId(int id) {
 		setId(id);

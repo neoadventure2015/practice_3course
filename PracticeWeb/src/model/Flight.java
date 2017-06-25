@@ -20,27 +20,14 @@ public class Flight implements Serializable, IModel{
 	private int continuance;
 	private String name;
 	
-	
 	@ManyToOne
-	@JoinColumn(name = "flight_from")
-	private Airport airportFrom;
+	@JoinColumn(name = "FLIGHT_FROM")
+	private Airport airportFROM;
+
 	@ManyToOne
-	@JoinColumn(name = "flight_to")
+	@JoinColumn(name = "FLIGHT_TO")
 	private Airport airportTO;
-	
-	public Airport getAirportFrom() {
-		return this.airportFrom;
-	}
-	public Airport getAirportTo() {
-		return this.airportTO;
-	}
-	public void setAirportTo(Airport airportTo) {
-		this.airportTO = airportTo;
-	}
-	public void setAirportFrom (Airport airportFrom) {
-		this.airportFrom = airportFrom;
-	}
-	
+
 	
 	
 	// bi-directional many-to-one association to Ticket
@@ -74,6 +61,21 @@ public class Flight implements Serializable, IModel{
 		this.name = name;
 	}
 
+	
+	public Airport getAirportFrom() {
+		return this.airportFROM;
+	}
+	public void setAirportFrom(Airport airportFROM) {
+		this.airportFROM = airportFROM;
+	}
+	public Airport getAirportTO() {
+		return this.airportTO;
+	}
+	public void setAirportTO(Airport airportTO) {
+		this.airportTO = airportTO;
+	}
+
+	
 	public List<Ticket> getTickets() {
 		return this.tickets;
 	}
@@ -95,19 +97,23 @@ public class Flight implements Serializable, IModel{
 
 		return ticket;
 	}
+
+	
 	@Override
 	public String[] getTableHeaders() {
-		return new String[] { "Id", "Name", "Continuance" };
+		return new String[] { "Id", "Name", "Continuance", "AirportFrom", "AirportTO" };
 	}
 	@Override
 	public Object[] getTableRowData() {
-		return new Object[] { id, name, continuance };
+		return new Object[] { id, name, continuance, airportFROM, airportTO };
 	}
 	@Override
 	public void updateWith(Object mask) {
 		Flight obj = (Flight) mask;
 		name = obj.getName();
 		continuance = obj.getContinuance();
+		airportFROM = obj.getAirportFrom();
+		airportTO = obj.getAirportTO();
 		
 	}
 	@Override
@@ -142,7 +148,10 @@ public class Flight implements Serializable, IModel{
 
 	@Override
 	public String toString() {
-		return "Flight id=" + id + ", continuance=" + continuance + ", name=" + name;
+		return "Flight [id=" + id + ", continuance=" + continuance + ", name=" + name + ", airportFROM=" + airportFROM
+				+ ", airportTO=" + airportTO + "]";
 	}
+
+
 
 }
